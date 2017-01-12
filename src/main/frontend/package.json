@@ -8,6 +8,8 @@
 		"angular-messages": "1.5.10",
 		"browserify": "13.3.0",
 		"gulp": "3.9.1",
+		"gulp-jscs": "4.0.0",
+		"gulp-jshint": "2.0.4",
 		"vinyl-source-stream": "1.1.0"
 	}
 }
