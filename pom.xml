@@ -144,6 +144,8 @@
             			<phase>generate-resources</phase>
             			<configuration>
             				<arguments>dist</arguments>
+            				<!-- this is for eclipse to avoid running gulp unnecessarily -->
+            				<srcdir>${frontend-plugin.workdir}</srcdir>
             				<environmentVariables>
             					<DIST_DIR>${frontend-plugin.distdir}</DIST_DIR>
             				</environmentVariables>
