@@ -29,7 +29,8 @@ var cachebusterInst = new CacheBuster();
 gulp.task('jshint', function() {
   return gulp.src('./js/**/*.js')
     .pipe(jshint())
-    .pipe(jshint.reporter());
+    .pipe(jshint.reporter('default'))
+    .pipe(jshint.reporter('fail'));
 });
 
 /*
@@ -39,7 +40,8 @@ gulp.task('jshint', function() {
 gulp.task('jscs', function() {
   return gulp.src('./js/**/*.js')
     .pipe(jscs())
-    .pipe(jscs.reporter());
+    .pipe(jscs.reporter())
+    .pipe(jscs.reporter('fail'));
 });
 
 /*
