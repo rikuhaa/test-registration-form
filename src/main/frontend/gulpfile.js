@@ -3,6 +3,7 @@
 
 // TODO js / css minification
 // SASS integration
+// angular template caching (though no actual templates yet)
 
 var gulp = require('gulp');
 var browserify = require('browserify');
