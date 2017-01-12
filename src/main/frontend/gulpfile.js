@@ -23,12 +23,19 @@ gulp.task('build-js', function() {
     .pipe(gulp.dest(distDir));
 });
 
-gulp.task('copy-css-dep', function() {
-  gulp.src('./node_modules/angular-material/angular-material.css')
-    .pipe(gulp.dest(distDir));
+gulp.task('copy-img', function() {
+  gulp.src('./img/*')
+    .pipe(gulp.dest(distDir + '/img'));
 });
 
-gulp.task('dist', ['build-js', 'copy-css-dep'], function() { 
+gulp.task('copy-css', function() {
+  gulp.src('./node_modules/angular-material/angular-material.css')
+    .pipe(gulp.dest(distDir + '/css'));
+  gulp.src('./css/app.css')
+    .pipe(gulp.dest(distDir + '/css'));
+});
+
+gulp.task('dist', ['build-js', 'copy-css', 'copy-img'], function() { 
   return gulp.src('index.html')
     .pipe(gulp.dest(distDir));
 });
