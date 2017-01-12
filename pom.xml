@@ -130,6 +130,7 @@
             				<arguments>install</arguments>
             			</configuration>
             		</execution>
+            		<!-- call gulp build task and instruct it where to store the result -->
             		<execution>
             			<id>gulp build</id>
             			<goals>
