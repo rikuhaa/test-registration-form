@@ -9,19 +9,33 @@ var source = require('vinyl-source-stream');
 // static code analysis tools
 var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
-
+// tool for renaming files that need cache busting
+var CacheBuster = require('gulp-cachebust');
 
 var distDir = 'dist';
 if (process.env.DIST_DIR) {
   distDir = process.env.DIST_DIR;
 }
 
+// this instance is needed for storing the cachebusted
+// names of eg. bundle.js so that they can be rewrited
+// in index.html in final stage
+var cachebusterInst = new CacheBuster();
+
+/*
+* Run the jshint js code linter with default settings
+* on all the js code
+*/
 gulp.task('jshint', function() {
   return gulp.src('./js/**/*.js')
     .pipe(jshint())
     .pipe(jshint.reporter());
 });
 
+/*
+* Run the jscs js style checker on all the js code.
+* Uses settings from '.jscsrc'
+*/
 gulp.task('jscs', function() {
   return gulp.src('./js/**/*.js')
     .pipe(jscs())
@@ -41,6 +55,7 @@ gulp.task('build-js', ['jscs', 'jshint'], function() {
   });
   return browserifyIns.bundle()
   	.pipe(source('bundle.js'))
+    .pipe(cachebusterInst.resources())
     .pipe(gulp.dest(distDir));
 });
 
@@ -59,12 +74,21 @@ gulp.task('copy-img', function() {
 */
 gulp.task('copy-css', function() {
   gulp.src('./node_modules/angular-material/angular-material.css')
+    .pipe(cachebusterInst.resources())
     .pipe(gulp.dest(distDir + '/css'));
   gulp.src('./css/app.css')
+    .pipe(cachebusterInst.resources())
     .pipe(gulp.dest(distDir + '/css'));
 });
 
+/*
+* Task that waits for other build tasks to complete
+* and at the end updates the cachebusted resource names
+* to the index file and copies the resulting index.html
+* to the target directory
+*/
 gulp.task('dist', ['build-js', 'copy-css', 'copy-img'], function() { 
   return gulp.src('index.html')
+    .pipe(cachebusterInst.references())
     .pipe(gulp.dest(distDir));
 });
