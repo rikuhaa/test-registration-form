@@ -11,11 +11,27 @@ var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 // tool for renaming files that need cache busting
 var CacheBuster = require('gulp-cachebust');
+// karma for running tests
+var karma = require('karma');
 
 var distDir = 'dist';
 if (process.env.DIST_DIR) {
   distDir = process.env.DIST_DIR;
 }
+
+/*
+* This task starts a karma server using the 'tdd' config.
+*
+* This configuration will run all the spec files in the
+* test-directory and re-run all the tests when a test 
+* or source js-file changes.
+*/
+gulp.task('tdd', function(done) {
+  new karma.Server({
+    configFile: __dirname + '/karma_tdd_conf.js',
+    singleRun: false
+  }, done).start();
+});
 
 // this instance is needed for storing the cachebusted
 // names of eg. bundle.js so that they can be rewrited
