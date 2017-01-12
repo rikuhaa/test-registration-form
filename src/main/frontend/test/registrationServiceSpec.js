@@ -15,6 +15,22 @@ describe('registrationService', function() {
 
 	});
 
+  it('sends check for already registered email', function(done) {
+
+    this.$httpBackend.when('GET', '/register/test@test.com').respond(200, true);
+
+    var res = this.registrationService.isAlreadyRegistered('test@test.com');    
+
+    res.then(function(result) {
+      expect(result.success).toBeTruthy();
+      done();
+    });
+
+    this.$httpBackend.flush();
+
+  });
+
+
 	it('sends the new user post request', function(done) {
 
 		this.$httpBackend.when('POST', '/register/',
