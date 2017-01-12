@@ -6,7 +6,7 @@ var angular = require('angular');
 angular.module('k15t-pat-registration')
   .factory('registrationService', ['$http', '$q',
     function($http, $q) {
-      
+
       var registerNew = function(name) {
         var userData = {'name': name};
         var defer = $q.defer();
@@ -32,16 +32,16 @@ angular.module('k15t-pat-registration')
         $http.get('/register/' + email)
           .success(function(data) {
             defer.resolve({
-                'success': true,
-                'data': data
-              });
-            })
-            .error(function() {
-              defer.resolve({
-                'success': false
-              });
+              'success': true,
+              'data': data
             });
-          return defer.promise;
+          })
+          .error(function() {
+            defer.resolve({
+              'success': false
+            });
+          });
+        return defer.promise;
 
       };
 

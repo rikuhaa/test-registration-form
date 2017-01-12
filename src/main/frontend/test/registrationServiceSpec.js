@@ -30,6 +30,20 @@ describe('registrationService', function() {
 
   });
 
+  it('isAlreadyRegistered() handles failing calls', function(done) {
+
+    this.$httpBackend.when('GET', '/register/test@test.com').respond(404, true);
+
+    var res = this.registrationService.isAlreadyRegistered('test@test.com');
+
+    res.then(function(result) {
+      expect(result.success).toBeFalsy();
+      done();
+    });
+
+    this.$httpBackend.flush();
+
+  });
 
 	it('sends the new user post request', function(done) {
 
