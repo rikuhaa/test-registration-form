@@ -1,6 +1,9 @@
 /*jshint node: true */
 'use strict';
 
+// TODO js / css minification
+// SASS integration
+
 var gulp = require('gulp');
 var browserify = require('browserify');
 // required to convert browserify result stream

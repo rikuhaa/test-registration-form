@@ -6,6 +6,7 @@
 		"angular-aria": "1.5.10",
 		"angular-material": "1.1.1",
 		"angular-messages": "1.5.10",
+		"angular-mocks": "1.5.10",
 		"browserify": "13.3.0",
 		"browserify-istanbul": "2.0.0",
 		"gulp": "3.9.1",

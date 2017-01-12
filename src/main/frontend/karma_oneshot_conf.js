@@ -6,6 +6,7 @@ module.exports = function(config) {
     reporters: ['spec', 'coverage'],
     files: [
       'js/**/*.js',
+      'node_modules/angular-mocks/angular-mocks.js',
       'test/**/*.js'
     ],
     autoWatch: false,
