@@ -6,3 +6,4 @@ lib/
 .classpath
 *.iml
 src/main/frontend/node_modules
+src/main/frontend/gen

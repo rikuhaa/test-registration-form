@@ -3,7 +3,7 @@ module.exports = function(config) {
     basePath: '',
     logLevel: config.LOG_INFO,
     frameworks: ['browserify', 'jasmine'],
-    reporters: ['spec'],
+    reporters: ['spec', 'coverage'],
     files: [
       'js/**/*.js',
       'test/**/*.js'
@@ -15,7 +15,20 @@ module.exports = function(config) {
       'js/**/*.js': ['browserify']
     },
     browserify: {
-      debug: true
+      debug: true,
+      "transform": ["browserify-istanbul"]
+    },
+    coverageReporter: {
+      type: 'html',
+      dir: 'gen/',
+      check: {
+        global: {
+          statements: 80,
+          lines: 80,
+          functions: 80,
+          branches: 80
+        }
+      }
     }
   });
 };
