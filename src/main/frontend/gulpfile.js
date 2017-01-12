@@ -13,6 +13,9 @@ var jscs = require('gulp-jscs');
 var CacheBuster = require('gulp-cachebust');
 // karma for running tests
 var karma = require('karma');
+// this is needed for changing karma test failures 
+// to nicer looking errors
+var gutil = require('gulp-util');
 
 var distDir = 'dist';
 if (process.env.DIST_DIR) {
@@ -31,6 +34,23 @@ gulp.task('tdd', function(done) {
     configFile: __dirname + '/karma_tdd_conf.js',
     singleRun: false
   }, done).start();
+});
+
+gulp.task('test', function(done) {
+  new karma.Server({
+    configFile: __dirname + '/karma_oneshot_conf.js',
+    singleRun: true
+  }, function(err){
+    // if the karma error status != 0, use gulp-util
+    // to fail the build relatively cleanly
+    if(err === 0){
+      done();
+    } else {
+      done(new gutil.PluginError('karma', {
+        message: 'Karma Tests failed'
+      }));
+    }
+  }).start();
 });
 
 // this instance is needed for storing the cachebusted
@@ -65,17 +85,19 @@ gulp.task('jscs', function() {
 * js files to one bundle.js and resolves all 
 * the dependencies
 */
-gulp.task('build-js', ['jscs', 'jshint'], function() {
-  var browserifyIns = browserify({
-    'entries': './js/app.js',
-    'paths': ['./js'],
-    'debug': false
+gulp.task('build-js', [
+    'test', 'jscs', 'jshint'
+  ], function() {
+    var browserifyIns = browserify({
+      'entries': './js/app.js',
+      'paths': ['./js'],
+      'debug': false
+    });
+    return browserifyIns.bundle()
+    	.pipe(source('bundle.js'))
+      .pipe(cachebusterInst.resources())
+      .pipe(gulp.dest(distDir));
   });
-  return browserifyIns.bundle()
-  	.pipe(source('bundle.js'))
-    .pipe(cachebusterInst.resources())
-    .pipe(gulp.dest(distDir));
-});
 
 /*
 * Task that copies contents of img-folder to 
