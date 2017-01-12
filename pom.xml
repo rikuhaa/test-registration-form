@@ -197,6 +197,13 @@
 	                <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
 	            </configuration>
 	    	</plugin>
+	    	
+	    	<!-- FindBugs static code analysis tool -->
+	    	<plugin>
+	    		<groupId>org.codehaus.mojo</groupId>
+	    		<artifactId>findbugs-maven-plugin</artifactId>
+	    		<version>3.0.4</version>
+	    	</plugin>
 	    </plugins>
 	</reporting>
 
