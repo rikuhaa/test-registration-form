@@ -197,12 +197,32 @@
 	                <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
 	            </configuration>
 	    	</plugin>
-	    	
+	    	<plugin>
+	        	<groupId>org.apache.maven.plugins</groupId>
+	        	<artifactId>maven-javadoc-plugin</artifactId>
+	        	<version>2.10.4</version>
+	        	<configuration>
+	          		<show>private</show>
+	        	</configuration>
+	        	<!-- this avoids the heavy gulp task from being run twice -->
+	        	<reportSets>
+	        		<reportSet>
+	        			<reports>
+	        				<report>javadoc-no-fork</report>
+	        				<report>test-javadoc-no-fork</report>
+	        			</reports>
+	        		</reportSet>
+	        	</reportSets>
+	      	</plugin>
+	      	
 	    	<!-- FindBugs static code analysis tool -->
 	    	<plugin>
 	    		<groupId>org.codehaus.mojo</groupId>
 	    		<artifactId>findbugs-maven-plugin</artifactId>
 	    		<version>3.0.4</version>
+	    		<configuration>
+	    			<effort>Max</effort>
+	    		</configuration>
 	    	</plugin>
 	    </plugins>
 	</reporting>
