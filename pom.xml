@@ -155,7 +155,49 @@
             	
             </plugin>
             
+            <!-- JaCoCo to measure test coverage -->
+            <plugin>
+            	<groupId>org.jacoco</groupId>
+            	<artifactId>jacoco-maven-plugin</artifactId>
+            	<version>0.7.8</version>
+            	<executions>
+            		<execution>
+            			<id>prepare coverage agent</id>
+            			<goals>
+            				<goal>prepare-agent</goal>
+            			</goals>
+            		</execution>
+            		<execution>
+            			<id>report coverage</id>
+            			<phase>prepare-package</phase>
+            			<goals>
+            				<goal>report</goal>
+            			</goals>
+            		</execution>
+            		<execution>
+            			<id>check coverage</id>
+            			<goals>
+            				<goal>check</goal>
+            			</goals>
+            		</execution>
+            	</executions>
+			</plugin>
+            
         </plugins>
     </build>
+    
+    <reporting>
+    	<plugins>
+    		<plugin>
+    			<groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-project-info-reports-plugin</artifactId>
+	            <version>2.9</version>
+	            <configuration>
+	            	<!-- avoids problems when mvn site tries to resolve spring repository dependencies -->
+	                <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+	            </configuration>
+	    	</plugin>
+	    </plugins>
+	</reporting>
 
 </project>
