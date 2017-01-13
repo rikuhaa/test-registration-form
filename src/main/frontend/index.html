@@ -15,7 +15,8 @@
     <img src="img/logo_k15t.png" width="120px"/>
   </div>
 
-  <div ng-controller="registrationController" layout="column"   class="md-inline-form">
+  <div ng-controller="registrationController" layout="column" 
+    class="md-inline-form">
   
     <h1 ng-if="!registrationComplete">
       registration not complete
@@ -26,22 +27,41 @@
 
     <md-content layout-padding>
       <div>
-        <form name="userForm">
+        <form name="registrationForm">
 
-          <div layout-gt-sm="row">
-            <md-input-container class="md-block" flex-gt-sm>
-              <label>First name</label>
-              <input ng-model="user.firstName">
-            </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Name</label>
+            <input ng-model="user.name">
+          </md-input-container>
 
-            <md-input-container class="md-block" flex-gt-sm>
-              <label>Long Last Name That Will Be Truncated And 3 Dots (Ellipsis) Will Appear At The End</label>
-              <input ng-model="theMax">
-            </md-input-container>
-          </div>
+          <md-input-container class="md-block">
+            <label>Password</label>
+            <input ng-model="user.password">
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Repeat Password</label>
+            <input ng-model="user.passwordrep">
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>E-Mail</label>
+            <input ng-model="user.email">
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Repeat E-Mail</label>
+            <input ng-model="user.emailreep">
+          </md-input-container>
+
+          <md-input-container class="">
+            <label>Phone Number</label>
+            <input ng-model="user.phonenumber">
+          </md-input-container>
 
           <md-input-container md-no-float class="md-block">
-            <input ng-model="user.address2" placeholder="Address 2">
+            <label>Address</label>
+            <input ng-model="user.address">
           </md-input-container>
 
           <div layout-gt-sm="row">
