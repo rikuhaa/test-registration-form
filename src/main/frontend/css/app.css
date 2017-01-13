@@ -6,6 +6,10 @@ body {
     margin: 0;
 }
 
+#main_content {
+    max-width: 800px;
+}
+
 h1 {
     padding-left: 71px;
     padding-top: 25px;
@@ -20,18 +24,6 @@ h1 span {
     line-height: 20px;
 }
 
-form {
-    width: 600px;
-    padding: 20px;
-    padding-top: 38px;
-}
-
 .header {
     padding: 20px;
-}
-
-.bannerText {
-    min-height: 150px;
-    background-color: #4af;
-    display: flex;
 }

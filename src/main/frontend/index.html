@@ -9,14 +9,14 @@
   <link rel="stylesheet" href="css/angular-material.css">
 </head>
 
-<body ng-app="k15t-pat-registration" ng-cloak>
+<body ng-app="k15t-pat-registration" ng-cloak layout-padding>
 
   <div class="header">
     <img src="img/logo_k15t.png" width="120px"/>
   </div>
 
   <div ng-controller="registrationController" layout="column" 
-    class="md-inline-form">
+    class="md-inline-form" id="main_content">
   
     <h1 ng-if="!registrationComplete">
       registration not complete
@@ -25,66 +25,79 @@
       registration completed
     </h1>
 
-    <md-content layout-padding>
-      <div>
-        <form name="registrationForm">
+    <md-content layout-padding flex md-whiteframe="4">
 
-          <md-input-container class="md-block" flex-gt-sm>
+      <md-toolbar>
+        <h2 class="md-toolbar-tools">
+          <span>Registration Form</span>
+        </h2>
+      </md-toolbar>
+
+      <div flex>
+        <form name="registrationForm" flex>
+
+          <md-input-container class="md-block" flex-gt-xs>
             <label>Name</label>
-            <input ng-model="user.name">
+            <input ng-model="user.name" required>
           </md-input-container>
+
+          <div class="md-block">
+            <md-input-container>
+              <label>Password</label>
+              <input ng-model="user.password" required>
+            </md-input-container>
+
+            <md-input-container>
+              <label>Repeat Password</label>
+              <input ng-model="user.passwordrep" required>
+            </md-input-container>
+          </div>
+
+          <div class="md-block">
+            <md-input-container>
+              <label>E-Mail</label>
+              <input ng-model="user.email" required>
+            </md-input-container>
+
+            <md-input-container>
+              <label>Repeat E-Mail</label>
+              <input ng-model="user.emailreep" required>
+            </md-input-container>
+          </div>
 
           <md-input-container class="md-block">
-            <label>Password</label>
-            <input ng-model="user.password">
-          </md-input-container>
-
-          <md-input-container class="md-block">
-            <label>Repeat Password</label>
-            <input ng-model="user.passwordrep">
-          </md-input-container>
-
-          <md-input-container class="md-block">
-            <label>E-Mail</label>
-            <input ng-model="user.email">
-          </md-input-container>
-
-          <md-input-container class="md-block">
-            <label>Repeat E-Mail</label>
-            <input ng-model="user.emailreep">
-          </md-input-container>
-
-          <md-input-container class="">
             <label>Phone Number</label>
             <input ng-model="user.phonenumber">
           </md-input-container>
 
-          <md-input-container md-no-float class="md-block">
+          <md-input-container class="md-block">
             <label>Address</label>
-            <input ng-model="user.address">
+            <input ng-model="user.address" required>
           </md-input-container>
 
-          <div layout-gt-sm="row">
-            <md-input-container class="md-block" flex-gt-sm>
+          <div layout-gt-xs="row">
+            <md-input-container class="md-block" flex-gt-xs>
               <label>City</label>
-              <input ng-model="user.city">
+              <input ng-model="user.city" required>
             </md-input-container>
 
-            <md-input-container class="md-block" flex-gt-sm>
+            <md-input-container class="md-block" flex-gt-xs>
               <label>State</label>
-              <md-select ng-model="user.state">
-                <md-option ng-repeat="state in states" value="{{state.abbrev}}">
+              <md-select ng-model="user.state" required>
+                <md-option ng-repeat="state in states" 
+                  value="{{state.abbrev}}">
                 {{state.abbrev}}
                 </md-option>
               </md-select>
             </md-input-container>
 
-            <md-input-container class="md-block" flex-gt-sm>
+            <md-input-container class="md-block" flex-gt-xs>
               <label>Postal Code</label>
               <input name="postalCode" ng-model="user.postalCode" placeholder="12345"
                    required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
 
-              <div ng-messages="userForm.postalCode.$error" role="alert" multiple>
+              <div ng-messages="registrationForm.postalCode.$error" 
+                role="alert" multiple>
                 <div ng-message="required" class="my-message">You must supply a postal code.</div>
                 <div ng-message="pattern" class="my-message">That doesn't look like a valid postal
                 code.
@@ -94,6 +107,14 @@
                 </div>
               </div>
             </md-input-container>
+          </div>
+
+          <div layout="row" layout-align="end center" flex>
+            <md-button type="submit" 
+                class="md-raised md-primary" 
+                action="registerUser()">
+              Register
+            </md-button>
           </div>
 
         </form>

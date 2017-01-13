@@ -8,4 +8,10 @@ angular.module('k15t-pat-registration').controller(
 
     $scope.registrationComplete = false;
 
+    $scope.user = {};
+
+    $scope.registerUser = function() {
+    	alert("registered!");
+    };
+
   }]);
