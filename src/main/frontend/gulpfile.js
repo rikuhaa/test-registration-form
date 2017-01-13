@@ -20,6 +20,8 @@ var karma = require('karma');
 // this is needed for changing karma test failures 
 // to nicer looking errors
 var gutil = require('gulp-util');
+// for quick development deployment of the client side
+var webserver = require('gulp-webserver');
 
 var distDir = 'dist';
 if (process.env.DIST_DIR) {
@@ -135,4 +137,33 @@ gulp.task('dist', ['build-js', 'copy-css', 'copy-img'], function() {
   return gulp.src('index.html')
     .pipe(cachebusterInst.references())
     .pipe(gulp.dest(distDir));
+});
+
+// As the project grows these tasks should be refactored
+// to use watchify in order to be able to do the build 
+// incrementally (and not for the whole browserify 
+// require change)
+
+/*
+* Task that watches for changes in the source files and
+* triggers a new 'dist' build on changes
+*/
+gulp.task('watch', function() {
+  return gulp.watch(['./index.html', './css/app.css',
+    './js/**/*/js'], ['dist']);
+});
+
+/*
+* A task that sets up a lightweigth webserver for testing 
+* the frontend implementation (without necessarily having 
+* backend services running) and watches for changes in 
+* the source files
+*/
+gulp.task('develop', ['dist', 'watch'], function() {
+  gulp.src(distDir)
+    .pipe(webserver({
+      'livereload': false,
+      'host': 'localhost',
+      'open': 'http://localhost:8000/index.html'
+    }));
 });
