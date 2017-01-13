@@ -1,29 +1,44 @@
 package com.k15t.pat.registration;
 
-import javax.servlet.Registration;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-@Path("/registration")
+@Path("registration")
 @Component
 public class RegistrationResource {
-	
-	// Extend the current resource to receive and store the data in memory.
-	// Return a success information to the user including the entered information.
-	// In case of the address split the information into a better format/structure
-	// for better handling later on.
-	public Response save() {
-		return Response.ok().build();
+
+    @Autowired
+    private RegistrationDaoService registrationDaoService;
+
+    // Extend the current resource to receive and store the data in memory.
+    // Return a success information to the user including the entered
+    // information.
+    // In case of the address split the information into a better
+    // format/structure
+    // for better handling later on.
+
+    // TODO should have a access restricted method for getting
+    // all the current registrations
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON_VALUE)
+    public Response registerNew(Registration registration) {
+
+	System.out.println("_______________Got registration: e-mail=" + registration.getEmail());
+
+	boolean wasNew = registrationDaoService.addRegistration(registration);
+
+	if (wasNew) {
+	    return Response.status(Response.Status.CREATED).build();
+	} else {
+	    return Response.status(Response.Status.CONFLICT).build();
 	}
-	
-	@POST
-	@Consumes({ "application/json" })
-	public void registerNew(Registration registration) {
-		
-	}
-	
+    }
+
 }
