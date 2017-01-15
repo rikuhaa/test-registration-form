@@ -150,7 +150,7 @@ gulp.task('dist', ['build-js', 'copy-css', 'copy-img'], function() {
 */
 gulp.task('watch', function() {
   return gulp.watch(['./index.html', './css/app.css',
-    './js/**/*.js'], ['dist']);
+    './js/**/*.js', './test/**/*.js'], ['dist']);
 });
 
 /*
