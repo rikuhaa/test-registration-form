@@ -19,8 +19,22 @@ angular.module('k15t-pat-registration').controller(
     };
 
     $scope.registerUser = function() {
+
+      var toRegister = {
+        'name': $scope.user.name,
+        'password': $scope.user.password,
+        'phoneNumber': $scope.user.phoneNumber,
+        'email': $scope.user.email
+      };
+      toRegister.address = {
+        'streetAddress': $scope.user.streetAddress,
+        'zipCode': $scope.user.zipCode,
+        'city': $scope.user.city,
+        'country': $scope.user.country
+      };
+
       registrationService
-        .registerNew('test')
+        .registerNew(toRegister)
         .then(function(res) {
           if (res.success) {
             $mdDialog.show(

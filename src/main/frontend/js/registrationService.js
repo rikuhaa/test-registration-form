@@ -7,8 +7,8 @@ angular.module('k15t-pat-registration')
   .factory('registrationService', ['$http', '$q',
     function($http, $q) {
 
-      var registerNew = function(name) {
-        var userData = {'name': name};
+      var registerNew = function(toRegister) {
+        var userData = JSON.stringify(toRegister);
         var defer = $q.defer();
         $http.post('/register/', userData)
           .success(function(data) {
