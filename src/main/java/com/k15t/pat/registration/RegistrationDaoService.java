@@ -1,6 +1,5 @@
 package com.k15t.pat.registration;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,9 +7,11 @@ import java.util.Map;
 
 import javax.inject.Singleton;
 
+import org.bouncycastle.util.encoders.Base64;
 import org.springframework.stereotype.Service;
 
 import com.k15t.pat.registration.Registration.Address;
+import com.k15t.pat.util.PasswordUtil;
 
 @Singleton
 @Service
@@ -52,7 +53,7 @@ public class RegistrationDaoService {
 
 	    reg.setEmail(immutableReg.email);
 	    reg.setName(immutableReg.name);
-	    reg.setPassword("****");
+	    reg.setPassword("HASH,Base64: " + Base64.toBase64String(immutableReg.passwordHash));
 	    reg.setPhoneNumber(immutableReg.phone);
 
 	    reg.setAddress(addr);
@@ -64,7 +65,7 @@ public class RegistrationDaoService {
     }
 
     private byte[] hashPassword(String password) {
-	return password.getBytes(Charset.forName("UTF-8"));
+	return PasswordUtil.hashPw(password);
     }
 
     private static class ImmutableRegistration {
