@@ -1,5 +1,7 @@
 package com.k15t.pat.registration;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -28,7 +30,7 @@ public class RegistrationResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON_VALUE)
-    public Response registerNew(Registration registration) {
+    public Response registerNew(@NotNull @Valid Registration registration) {
 
 	System.out.println("_______________Got registration: e-mail=" + registration.getEmail());
 

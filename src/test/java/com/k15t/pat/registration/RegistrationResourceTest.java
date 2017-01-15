@@ -51,7 +51,7 @@ public class RegistrationResourceTest {
 	Registration reg = new Registration();
 
 	reg.setAddress(addr);
-	reg.setEmail("test");
+	reg.setEmail("test@test.com");
 	reg.setName("test");
 	reg.setPassword("test");
 	reg.setPhoneNumber("test");
@@ -75,7 +75,7 @@ public class RegistrationResourceTest {
 	Registration reg = new Registration();
 
 	reg.setAddress(addr);
-	reg.setEmail("test2");
+	reg.setEmail("test2@test.com");
 	reg.setName("test");
 	reg.setPassword("test");
 	reg.setPhoneNumber("test");
