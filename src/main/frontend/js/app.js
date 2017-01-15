@@ -3,9 +3,12 @@
 
 var angular = require('angular');
 require('angular-material');
+require('angular-messages');
 
 angular.module('k15t-pat-registration', [
-  'ngMaterial'
+  'ngMaterial', 'ngMessages'
 ]);
 
+require('./registrationService.js');
 require('./registrationController.js');
+
