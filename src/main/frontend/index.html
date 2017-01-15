@@ -13,23 +13,23 @@
   ng-controller="registrationController"
   ng-cloak>
 
-  <div class="header" layout="row">
-    <div flex="none" layout="row" 
-      layout-align="start center">
-      <img src="img/logo_k15t.png" 
-        width="120px">
-    </div>
-    <div layout="row" layout-align="end center" flex>
-      <md-button ng-click="changeLanguage('en')">
-        En
-      </md-button>
-      <md-button ng-click="changeLanguage('de')">
-        De
-      </md-button>
-    </div>
-  </div>
-
   <div layout="column" id="main_content">
+
+    <div class="header" layout="row" layout-padding>
+      <div flex="none" layout="row" 
+        layout-align="start center">
+        <img src="img/logo_k15t.png" 
+          width="120px">
+      </div>
+      <div layout="row" layout-align="end center" flex>
+        <md-button ng-click="changeLanguage('en')">
+          En
+        </md-button>
+        <md-button ng-click="changeLanguage('de')">
+          De
+        </md-button>
+      </div>
+    </div>
 
     <md-content ng-if="registrationComplete">
       <h1>{{"REGISTRATION_COMPLETED" | translate}}</h1>
