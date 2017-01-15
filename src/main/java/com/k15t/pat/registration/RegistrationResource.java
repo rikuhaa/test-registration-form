@@ -39,7 +39,8 @@ public class RegistrationResource {
 	boolean wasNew = registrationDaoService.addRegistration(registration);
 
 	if (wasNew) {
-	    return Response.status(Response.Status.CREATED).build();
+	    registration.setPassword("********");
+	    return Response.status(Response.Status.CREATED).entity(registration).build();
 	} else {
 	    return Response.status(Response.Status.CONFLICT).build();
 	}

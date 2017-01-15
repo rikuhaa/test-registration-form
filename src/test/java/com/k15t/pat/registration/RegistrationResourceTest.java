@@ -63,6 +63,33 @@ public class RegistrationResourceTest {
     }
 
     @Test
+    public void returnsTheAddedRegistrationOnSuccess() throws Exception {
+
+	Registration.Address addr = new Registration.Address();
+
+	addr.setCity("New York");
+	addr.setCountry("USA");
+	addr.setStreetAddress("Central Park");
+	addr.setZipCode("115511");
+
+	Registration reg = new Registration();
+
+	reg.setAddress(addr);
+	reg.setEmail("new.yorker@test.com");
+	reg.setName("Jeo Testor");
+	reg.setPassword("password");
+	reg.setPhoneNumber("0202022020");
+
+	ResponseEntity<Registration> resp = restTemplate.postForEntity("/rest/registration", reg, Registration.class);
+
+	Assert.assertEquals(HttpStatus.CREATED, resp.getStatusCode());
+
+	reg.setPassword("********");
+	Assert.assertEquals(reg, resp.getBody());
+	Assert.assertTrue(reg != resp.getBody()); // extra sanity check
+    }
+
+    @Test
     public void tryingToCreuateDuplicateUserFails() throws Exception {
 
 	Registration.Address addr = new Registration.Address();

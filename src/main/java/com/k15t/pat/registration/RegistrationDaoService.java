@@ -52,7 +52,7 @@ public class RegistrationDaoService {
 
 	    reg.setEmail(immutableReg.email);
 	    reg.setName(immutableReg.name);
-	    reg.setPassword("********");
+	    reg.setPassword("****");
 	    reg.setPhoneNumber(immutableReg.phone);
 
 	    reg.setAddress(addr);
