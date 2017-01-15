@@ -17,7 +17,7 @@ describe('registrationService', function() {
 
   it('sends check for already registered email', function(done) {
 
-    this.$httpBackend.when('GET', '/register/test@test.com').respond(200, true);
+    this.$httpBackend.when('GET', '/rest/registration/test@test.com').respond(200, true);
 
     var res = this.registrationService.isAlreadyRegistered('test@test.com');    
 
@@ -32,7 +32,7 @@ describe('registrationService', function() {
 
   it('isAlreadyRegistered() handles failing calls', function(done) {
 
-    this.$httpBackend.when('GET', '/register/test@test.com').respond(404, true);
+    this.$httpBackend.when('GET', '/rest/registration/test@test.com').respond(404, true);
 
     var res = this.registrationService.isAlreadyRegistered('test@test.com');
 
@@ -47,7 +47,7 @@ describe('registrationService', function() {
 
 	it('sends the new user post request', function(done) {
 
-		this.$httpBackend.when('POST', '/register/',
+		this.$httpBackend.when('POST', '/rest/registration',
 			function(postData) {
         jsonData = JSON.parse(postData);
         //expect(jsonData.message).toBe(post.storyMessage);

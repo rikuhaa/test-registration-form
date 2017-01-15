@@ -10,7 +10,7 @@ angular.module('k15t-pat-registration')
       var registerNew = function(toRegister) {
         var userData = JSON.stringify(toRegister);
         var defer = $q.defer();
-        $http.post('/register/', userData)
+        $http.post('/rest/registration', userData)
           .success(function(data) {
             defer.resolve({
               'success': true,
@@ -29,7 +29,7 @@ angular.module('k15t-pat-registration')
 
         var defer = $q.defer();
 
-        $http.get('/register/' + email)
+        $http.get('/rest/registration/' + email)
           .success(function(data) {
             defer.resolve({
               'success': true,
