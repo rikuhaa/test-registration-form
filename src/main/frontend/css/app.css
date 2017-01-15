@@ -4,6 +4,13 @@ body {
     font-weight: 400;
     color: #3a474e;
     margin: 0;
+    padding: 10px;
+}
+
+@media(max-width: 480px) {
+    body {
+        padding: 0;
+    }
 }
 
 #main_content {
