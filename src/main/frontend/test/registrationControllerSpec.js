@@ -58,16 +58,14 @@ describe('registrationController', function() {
     expect(this.registrationService.registerNew).toHaveBeenCalled();
 
     expect(thenCallback).not.toBeFalsy();
-
-    spyOn(this.$mdDialog, 'show');
-
+    expect(this.$scope.processing).toBeTruthy();
+    
     thenCallback.call(null, {success: false});
-    expect(this.$mdDialog.show).toHaveBeenCalled();
-
-    this.$mdDialog.show.calls.reset();
+    expect(this.$scope.processing).toBeFalsy();
+    expect(this.$scope.registrationComplete).toBeFalsy();
 
     thenCallback.call(null, {success: true});
-    expect(this.$mdDialog.show).toHaveBeenCalled();
+    expect(this.$mdDialog.show).toBeTruthy();
   });
 
 

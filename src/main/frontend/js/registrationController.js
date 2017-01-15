@@ -11,6 +11,8 @@ angular.module('k15t-pat-registration').controller(
       $mdDialog, $translate) {
 
     $scope.registrationComplete = false;
+    // TODO could attach some semi-transparent curtain to this
+    $scope.processing = false;
 
     $scope.user = {};
 
@@ -20,6 +22,11 @@ angular.module('k15t-pat-registration').controller(
 
     $scope.registerUser = function() {
 
+      if ($scope.processing) {
+        return;
+      }
+
+      $scope.processing = true;
       var toRegister = {
         'name': $scope.user.name,
         'password': $scope.user.password,
@@ -37,13 +44,19 @@ angular.module('k15t-pat-registration').controller(
         .registerNew(toRegister)
         .then(function(res) {
           if (res.success) {
-            $mdDialog.show(
-              $mdDialog.alert()
-                .title('registered!'));
+            $scope.processing = false;
+            $scope.registrationComplete = true;
           } else {
-            $mdDialog.show(
-              $mdDialog.alert()
-                .title('Error in regstration!'));
+            $scope.processing = false;
+            $translate(res.cause)
+              .then(function(translatedCause) {
+                $mdDialog.show(
+                  $mdDialog.alert()
+                    .title(translatedCause)
+                    .ariaLabel(translatedCause)
+                    .ok('OK')
+                );
+              });
           }
         });
     };

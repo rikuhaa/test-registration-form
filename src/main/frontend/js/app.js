@@ -20,10 +20,14 @@ angular.module('k15t-pat-registration')
   .config(function($translateProvider) {
   $translateProvider.useSanitizeValueStrategy('escape');
   $translateProvider.translations('en', {
-    'REGISTRATION_FORM': 'Registration Form'
+    'REGISTRATION_FORM': 'Registration Form',
+    'EMAIL_ALREADY_REGISTERED': 'E-Mail already registered',
+    'SERVICE_NOT_AVAILABLE': 'Service not available',
+    'ERROR_IN_REGISTRATION': 'Error in registration'
   });
   $translateProvider.translations('de', {
     'REGISTRATION_FORM': 'Registrierungsformular'
   });
   $translateProvider.preferredLanguage('en');
+  $translateProvider.fallbackLanguage('en');
 });
