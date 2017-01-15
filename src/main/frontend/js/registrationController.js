@@ -14,12 +14,18 @@ angular.module('k15t-pat-registration').controller(
     // TODO could attach some semi-transparent curtain to this
     $scope.processing = false;
 
+    // model object to which the form fields are stored
     $scope.user = {};
 
     $scope.changeLanguage = function(lan) {
       $translate.use(lan);
     };
 
+    // takes the values enter into the registration form
+    // (these should be validated before calling this
+    // method) and calls the service method to do the 
+    // registration
+    // informs the user about the registration result
     $scope.registerUser = function() {
 
       if ($scope.processing) {
