@@ -59,7 +59,7 @@ describe('registrationController', function() {
 
     expect(thenCallback).not.toBeFalsy();
     expect(this.$scope.processing).toBeTruthy();
-    
+
     thenCallback.call(null, {success: false});
     expect(this.$scope.processing).toBeFalsy();
     expect(this.$scope.registrationComplete).toBeFalsy();
@@ -67,6 +67,5 @@ describe('registrationController', function() {
     thenCallback.call(null, {success: true});
     expect(this.$mdDialog.show).toBeTruthy();
   });
-
 
 });

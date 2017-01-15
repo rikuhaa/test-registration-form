@@ -26,6 +26,18 @@ angular.module('k15t-pat-registration').controller(
         return;
       }
 
+      // TODO this should be done with a custom validator
+      // directive (plenty of examples in the net)
+      if (!($scope.user.password === $scope.user.passwordRep &&
+        $scope.user.email === $scope.user.emailRep)) {
+        $mdDialog.show(
+          $mdDialog.alert()
+            .title('E-mails or passwords not identical')
+            .ok('OK')
+        );
+        return;
+      }
+
       $scope.processing = true;
       var toRegister = {
         'name': $scope.user.name,
