@@ -32,7 +32,8 @@
   <div layout="column" id="main_content">
 
     <md-content ng-if="registrationComplete">
-      Registration completed
+      <h1>{{"REGISTRATION_COMPLETED" | translate}}</h1>
+      <h2>{{"YOU_WILL_RECEIVE_CONFIRMATION_EMAIL_SOON" | translate}}</h2>
     </md-content>
 
     <md-content ng-if="!registrationComplete" 
@@ -50,7 +51,7 @@
           ng-submit="registerUser()">
 
           <md-input-container class="md-block" flex>
-            <label>Name</label>
+            <label>{{"NAME" | translate}}</label>
             <input ng-model="user.name" required
               pattern="^\S{1}.{0,79}\S$">
           </md-input-container>
@@ -58,14 +59,14 @@
           <div layout-gt-xs="row">
             <md-input-container class="md-block"
               flex-gt-xs>
-              <label>Password</label>
+              <label>{{"PASSWORD" | translate}}</label>
               <input type="password"
                 ng-model="user.password" required>
             </md-input-container>
 
             <md-input-container class="md-block" 
               flex-gt-xs>
-              <label>Repeat Password</label>
+              <label>{{"REPEAT_PASSWORD" | translate}}</label>
               <input type="password"
                 ng-model="user.passwordRep" required>
             </md-input-container>
@@ -74,55 +75,55 @@
           <div layout-gt-xs="row">
             <md-input-container 
               class="md-block" flex-gt-xs>
-              <label>E-Mail</label>
+              <label>{{"EMAIL" | translate}}</label>
               <input type="email" 
                 ng-model="user.email" required>
             </md-input-container>
 
             <md-input-container 
               class="md-block" flex-gt-xs>
-              <label>Repeat E-Mail</label>
+              <label>{{"REPEAT_EMAIL" | translate}}</label>
               <input type="email"
                 ng-model="user.emailRep" required>
             </md-input-container>
           </div>
 
           <md-input-container class="md-block">
-            <label>Phone Number</label>
-            <input pattern="\S{1}.{0,19}\"
+            <label>{{"PHONE_NUMBER" | translate}}</label>
+            <input pattern="\S{1}.{0,19}\S"
               ng-model="user.phoneNumber">
           </md-input-container>
 
           <md-input-container class="md-block">
-            <label>Address</label>
+            <label>{{"STREET_ADDRESS" | translate}}</label>
             <input ng-model="user.streetAddress" 
               pattern="\S{1}.{0,79}\S" required>
           </md-input-container>
 
           <div layout-gt-xs="row">
             <md-input-container class="md-block" flex-gt-xs>
-              <label>City</label>
+              <label>{{"CITY" | translate}}</label>
               <input ng-model="user.city" 
-                pattern="\S{1}.{0,49}\S"" required>
+                pattern="\S{1}.{0,49}\S" required>
             </md-input-container>
 
             <md-input-container class="md-block" flex-gt-xs>
-              <label>Country</label>
+              <label>{{"COUNTRY" | translate}}</label>
               <input ng-model="user.country" 
                 pattern="\S{1}.{0,49}\S" required>
             </md-input-container>
 
             <md-input-container class="md-block" flex-gt-xs>
-              <label>Zip Code</label>
+              <label>{{"ZIP_CODE" | translate}}</label>
               <input ng-model="user.zipCode"
-                pattern="\S{1}.{0,19}\" required>
+                pattern="\S{1}.{0,19}\S" required>
             </md-input-container>
           </div>
 
           <div layout="row" layout-align="end center" flex>
             <md-button type="submit" 
                 class="md-raised md-primary">
-              Register
+              {{"REGISTER" | translate}}
             </md-button>
           </div>
 
