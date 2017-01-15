@@ -1,10 +1,14 @@
 package com.k15t.pat.registration;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +36,6 @@ public class RegistrationResource {
     @Consumes(MediaType.APPLICATION_JSON_VALUE)
     public Response registerNew(@NotNull @Valid Registration registration) {
 
-	System.out.println("_______________Got registration: e-mail=" + registration.getEmail());
-
 	boolean wasNew = registrationDaoService.addRegistration(registration);
 
 	if (wasNew) {
@@ -43,4 +45,10 @@ public class RegistrationResource {
 	}
     }
 
+    // FIXME this should really be restricted to admin-role
+    @GET
+    @Produces(MediaType.APPLICATION_JSON_VALUE)
+    public List<Registration> getRegistrations() {
+	return registrationDaoService.getRegistrations();
+    }
 }

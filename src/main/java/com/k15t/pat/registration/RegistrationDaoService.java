@@ -1,13 +1,16 @@
 package com.k15t.pat.registration;
 
 import java.nio.charset.Charset;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Singleton;
 
 import org.springframework.stereotype.Service;
+
+import com.k15t.pat.registration.Registration.Address;
 
 @Singleton
 @Service
@@ -16,7 +19,6 @@ public class RegistrationDaoService {
     private Map<String, ImmutableRegistration> registrations = new HashMap<>();
 
     public boolean addRegistration(Registration toAdd) {
-	System.out.println("--------addRegistration in service");
 	if (registrations.containsKey(toAdd.getEmail())) {
 	    return false;
 	} else {
@@ -29,10 +31,36 @@ public class RegistrationDaoService {
 	    ImmutableRegistration reg = new ImmutableRegistration(toAdd.getEmail(), toAdd.getName(), passwordHash,
 		    toAdd.getPhoneNumber(), addr);
 
-	    registrations.put(reg.getEmail(), reg);
+	    registrations.put(reg.email, reg);
 
 	    return true;
 	}
+    }
+
+    public List<Registration> getRegistrations() {
+	List<Registration> res = new ArrayList<Registration>();
+
+	registrations.forEach((id, immutableReg) -> {
+	    Address addr = new Address();
+
+	    addr.setStreetAddress(immutableReg.address.streetAddress);
+	    addr.setCountry(immutableReg.address.country);
+	    addr.setCity(immutableReg.address.city);
+	    addr.setZipCode(immutableReg.address.zipCode);
+
+	    Registration reg = new Registration();
+
+	    reg.setEmail(immutableReg.email);
+	    reg.setName(immutableReg.name);
+	    reg.setPassword("********");
+	    reg.setPhoneNumber(immutableReg.phone);
+
+	    reg.setAddress(addr);
+
+	    res.add(reg);
+	});
+
+	return res;
     }
 
     private byte[] hashPassword(String password) {
@@ -56,26 +84,6 @@ public class RegistrationDaoService {
 	    this.passwordHash = passwordHash;
 	    this.phone = phone;
 	    this.address = address;
-	}
-
-	public String getEmail() {
-	    return email;
-	}
-
-	public String getName() {
-	    return name;
-	}
-
-	public byte[] getPasswordHash() {
-	    return Arrays.copyOf(passwordHash, passwordHash.length);
-	}
-
-	public ImmutableAddress getAddress() {
-	    return address;
-	}
-
-	public String getPhone() {
-	    return phone;
 	}
 
     }
