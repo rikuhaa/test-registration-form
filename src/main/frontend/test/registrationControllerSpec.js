@@ -9,11 +9,12 @@ describe('registrationController', function() {
 
     angular.mock.inject(function(_$rootScope_, 
       _$controller_, _registrationService_,
-      _$mdDialog_) {
+      _$mdDialog_, _$translate_) {
       this.$rootScope = _$rootScope_;
       this.$controller = _$controller_;
       this.registrationService = _registrationService_;
       this.$mdDialog = _$mdDialog_;
+      this.$translate = _$translate_;
 
       this.$scope = this.$rootScope.$new();
 
@@ -23,6 +24,20 @@ describe('registrationController', function() {
         });
 
     });
+
+  });
+
+  it('delegates change langugae to angular-translate', function() {
+
+    spyOn(this.$translate, 'use');
+
+    this.$scope.changeLanguage('fi');
+
+    expect(this.$translate.use).toHaveBeenCalledWith('fi');
+
+    this.$scope.changeLanguage('en');
+
+    expect(this.$translate.use).toHaveBeenCalledWith('en');
 
   });
 
