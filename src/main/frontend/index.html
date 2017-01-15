@@ -13,14 +13,16 @@
   ng-controller="registrationController"
   ng-cloak>
 
-  <div class="header">
-    <img src="img/logo_k15t.png" width="120px"/>
-    <md-select ng-model="user.state" required>
-      <md-option ng-repeat="state in states" 
-        value="{{state.abbrev}}">
-        {{state.abbrev}}
-      </md-option>
-    </md-select>
+  <div class="header" layout="row">
+    <img src="img/logo_k15t.png" width="120px" no-flex>
+    <div layout="row" layout-align="end center" flex>
+      <md-button ng-click="changeLanguage('en')">
+        En
+      </md-button>
+      <md-button ng-click="changeLanguage('de')">
+        De
+      </md-button>
+    </div>
   </div>
 
   <div layout="column" 
@@ -37,7 +39,7 @@
 
       <md-toolbar>
         <h2 class="md-toolbar-tools">
-          <span>Registration Form</span>
+          <span>{{"REGISTRATION_FORM" | translate}}</span>
         </h2>
       </md-toolbar>
 

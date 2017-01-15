@@ -6,12 +6,17 @@ var angular = require('angular');
 angular.module('k15t-pat-registration').controller(
   'registrationController', [
     '$scope', 'registrationService',
-    '$mdDialog', function(
-      $scope, registrationService, $mdDialog) {
+    '$mdDialog', '$translate', function(
+      $scope, registrationService,
+      $mdDialog, $translate) {
 
     $scope.registrationComplete = false;
 
     $scope.user = {};
+
+    $scope.changeLanguage = function(lan) {
+      $translate.use(lan);
+    };
 
     $scope.registerUser = function() {
       registrationService
