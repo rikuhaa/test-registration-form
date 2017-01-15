@@ -15,50 +15,28 @@ describe('registrationService', function() {
 
 	});
 
-  it('sends check for already registered email', function(done) {
-
-    this.$httpBackend.when('GET', '/rest/registration/test@test.com').respond(200, true);
-
-    var res = this.registrationService.isAlreadyRegistered('test@test.com');    
-
-    res.then(function(result) {
-      expect(result.success).toBeTruthy();
-      done();
-    });
-
-    this.$httpBackend.flush();
-
-  });
-
-  it('isAlreadyRegistered() handles failing calls', function(done) {
-
-    this.$httpBackend.when('GET', '/rest/registration/test@test.com').respond(404, true);
-
-    var res = this.registrationService.isAlreadyRegistered('test@test.com');
-
-    res.then(function(result) {
-      expect(result.success).toBeFalsy();
-      done();
-    });
-
-    this.$httpBackend.flush();
-
-  });
-
-	it('sends the new user post request', function(done) {
+	it('handles valid registration REST call', function(done) {
 
 		this.$httpBackend.when('POST', '/rest/registration',
 			function(postData) {
         jsonData = JSON.parse(postData);
-        //expect(jsonData.message).toBe(post.storyMessage);
-        //expect(jsonData.post_fb).toBe(post.postToFB);
-        //expect(jsonData.post_twitter).toBe(post.postToTwitter);
-        //expect(jsonData.post_team).toBe(post.postToTeam);
+        expect(jsonData.name).toEqual('testName');
+        expect(jsonData.email).toEqual('testEmail');
+        expect(jsonData.address).toBeTruthy();
+        expect(jsonData.address.street).toEqual('testStreet');
+        expect(jsonData.address.city).toEqual('testCity');
         return true;
       }
     ).respond(200, true);
 
-		var res = this.registrationService.registerNew('test');    
+		var res = this.registrationService.registerNew({
+      'name': 'testName',
+      'email': 'testEmail',
+      'address': {
+        'street': 'testStreet',
+        'city': 'testCity'
+      }
+    });    
 
     res.then(function(result) {
       expect(result.success).toBeTruthy();
@@ -68,5 +46,75 @@ describe('registrationService', function() {
     this.$httpBackend.flush();
 
 	});
+
+  it('handles informing already registered', function(done) {
+
+    // handle conflict (ie. user already added)
+    this.$httpBackend.when('POST', '/rest/registration',
+      function(postData) {
+        jsonData = JSON.parse(postData);
+        expect(jsonData).toEqual('test')
+        return true;
+      }
+    ).respond(409, true);
+
+    var res = this.registrationService.registerNew('test');    
+
+    res.then(function(result) {
+      expect(result.success).toBeFalsy();
+      expect(result.cause).toEqual('EMAIL_ALREADY_REGISTERED');
+      done();
+    });
+
+    this.$httpBackend.flush();
+
+  });
+
+  it('handles informing invalid data / general failure', function(done) {
+
+    // handle invalid data (user of the method should validate the data)
+    this.$httpBackend.when('POST', '/rest/registration',
+      function(postData) {
+        jsonData = JSON.parse(postData);
+        expect(jsonData).toEqual('test')
+        return true;
+      }
+    ).respond(400, true);
+
+    var res = this.registrationService.registerNew('test');    
+
+    res.then(function(result) {
+      expect(result.success).toBeFalsy();
+      expect(result.cause).toEqual('ERROR_IN_REGISTRATION');
+      done();
+    });
+
+    this.$httpBackend.flush();
+
+  });
+
+  // handle service down / 404
+  it('handles informing service down', function(done) {
+
+    // handle conflict (ie. user already added)
+    this.$httpBackend.when('POST', '/rest/registration',
+      function(postData) {
+        jsonData = JSON.parse(postData);
+        expect(jsonData).toEqual('test')
+        return true;
+      }
+    ).respond(404, true);
+
+    var res = this.registrationService.registerNew('test');    
+
+    res.then(function(result) {
+      expect(result.success).toBeFalsy();
+      expect(result.cause).toEqual('SERVICE_NOT_AVAILABLE');
+      done();
+    });
+
+    this.$httpBackend.flush();
+
+  });
 
 });

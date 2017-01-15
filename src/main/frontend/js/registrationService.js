@@ -11,43 +11,35 @@ angular.module('k15t-pat-registration')
         var userData = JSON.stringify(toRegister);
         var defer = $q.defer();
         $http.post('/rest/registration', userData)
-          .success(function(data) {
+          .then(
+          // success
+          function(response) {
             defer.resolve({
-              'success': true,
-              'data': data
+              'success': true
             });
-          })
-          .error(function() {
+          },
+          // failure
+          function(response) {
+            var cause = '';
+            if (response.status == 409) {
+              cause = 'EMAIL_ALREADY_REGISTERED';
+            } else if (response.status == 404) {
+              cause = 'SERVICE_NOT_AVAILABLE';
+            } else {
+              // handle also validation errors here,
+              // should not happen without bypassing client code
+              cause = 'ERROR_IN_REGISTRATION';
+            }
             defer.resolve({
-              'success': false
-            });
-          });
-        return defer.promise;
-      };
-
-      var isAlreadyRegistered = function(email) {
-
-        var defer = $q.defer();
-
-        $http.get('/rest/registration/' + email)
-          .success(function(data) {
-            defer.resolve({
-              'success': true,
-              'data': data
-            });
-          })
-          .error(function() {
-            defer.resolve({
-              'success': false
+              'success': false,
+              'cause': cause
             });
           });
         return defer.promise;
-
       };
 
       var methods = {
-        'registerNew': registerNew,
-        'isAlreadyRegistered': isAlreadyRegistered
+        'registerNew': registerNew
       };
 
       return methods;
