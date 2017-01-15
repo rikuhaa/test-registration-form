@@ -117,4 +117,21 @@ describe('registrationService', function() {
 
   });
 
+  it('sends correct query for getAllRegistered', function() {
+
+    this.$httpBackend.when('GET', '/rest/registration',
+      function() {
+
+      }
+    ).respond(200, "result");
+
+    var res = this.registrationService.getAllRegistered();
+
+    res.then(function(result) {
+      expect(result).toEqual({'response': 'result'});
+    });
+
+    this.$httpBackend.flush();
+  });
+
 });

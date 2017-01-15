@@ -4,8 +4,8 @@
 var angular = require('angular');
 
 angular.module('k15t-pat-registration')
-  .factory('registrationService', ['$http', '$q',
-    function($http, $q) {
+  .factory('registrationService', ['$http', '$q', '$log',
+    function($http, $q, $log) {
 
       var registerNew = function(toRegister) {
         var userData = JSON.stringify(toRegister);
@@ -38,8 +38,29 @@ angular.module('k15t-pat-registration')
         return defer.promise;
       };
 
+      var getAllRegistered = function() {
+
+        var defer = $q.defer();
+        $http.get('/rest/registration')
+          .then(
+          // success
+          function(response) {
+            defer.resolve({
+              'response': response.data
+            });
+          },
+          // failure
+          function(response) {
+            defer.resolve({
+              'response': 'error: ' + response.status
+            });
+          });
+        return defer.promise;
+      };
+
       var methods = {
-        'registerNew': registerNew
+        'registerNew': registerNew,
+        'getAllRegistered': getAllRegistered
       };
 
       return methods;

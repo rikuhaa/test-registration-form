@@ -23,7 +23,7 @@ angular.module('k15t-pat-registration').controller(
 
     // takes the values enter into the registration form
     // (these should be validated before calling this
-    // method) and calls the service method to do the 
+    // method) and calls the service method to do the
     // registration
     // informs the user about the registration result
     $scope.registerUser = function() {
@@ -77,6 +77,21 @@ angular.module('k15t-pat-registration').controller(
               });
           }
         });
+    };
+
+    $scope.showAllRegistered = function() {
+
+      registrationService
+        .getAllRegistered()
+        .then(function(res) {
+          $mdDialog.show(
+            $mdDialog.alert()
+              .title('All registered')
+              .textContent(res.response)
+              .ok('OK')
+            );
+        });
+
     };
 
   }]);

@@ -27,7 +27,7 @@ describe('registrationController', function() {
 
   });
 
-  it('delegates change langugae to angular-translate', function() {
+  it('delegates change language to angular-translate', function() {
 
     spyOn(this.$translate, 'use');
 
@@ -39,6 +39,19 @@ describe('registrationController', function() {
 
     expect(this.$translate.use).toHaveBeenCalledWith('en');
 
+  });
+
+  it('delegates get all registered to service', function() {
+    // just a test method at the moment, so only minor
+    // testing
+
+    spyOn(this.registrationService, 'getAllRegistered')
+      .and.returnValue({'then': function() {}});
+
+    this.$scope.showAllRegistered();
+    
+    expect(this.registrationService.getAllRegistered)
+      .toHaveBeenCalled();
   });
 
   it('initially has falsy "registrationComplete"', function() {
