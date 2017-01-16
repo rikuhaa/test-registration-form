@@ -22,16 +22,29 @@ public class RegistrationResource {
     @Autowired
     private RegistrationDaoService registrationDaoService;
 
-    // Extend the current resource to receive and store the data in memory.
-    // Return a success information to the user including the entered
-    // information.
-    // In case of the address split the information into a better
-    // format/structure
-    // for better handling later on.
-
-    // TODO should have a access restricted method for getting
-    // all the current registrations
-
+    /**
+     * <p>
+     * An entry point for POST queries to '/rest/registration'. Expects a valid
+     * and non-null {@link Registration} as a JSON payload on the request, and
+     * tries to add the received {@link Registration}
+     * </p>
+     * <p>
+     * If a {@link Registration} with matching e-mail was not already present in
+     * the {@link RegistrationDaoService}, the new registration is added. In
+     * this case this method returns a response with status
+     * {@link Response.Status#CREATED} and with the added entry as JSON as the
+     * response body (with hidden password).
+     * </p>
+     * <p>
+     * If a registration with matching e-mail was already present in the
+     * {@link RegistrationDaoService}, does not add a new registration and
+     * returns a response with {@link Response.Status#CONFLICT}
+     * </p>
+     * 
+     * @param registration
+     *            {@link Registration} to add (if not already added)
+     * @return {@link Response} with correct status and possible added data
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON_VALUE)
     public Response registerNew(@NotNull @Valid Registration registration) {
@@ -46,6 +59,18 @@ public class RegistrationResource {
 	}
     }
 
+    /**
+     * <p>
+     * An entry point for GET queries to '/rest/registration'.
+     * </p>
+     * <p>
+     * Returns a list of all present {@link Registration}s as JSON. For admin
+     * use.
+     * </p>
+     * 
+     * @return a list of all {@link Registration}s present in the service as
+     *         JSON
+     */
     // FIXME this should really be restricted to admin-role
     @GET
     @Produces(MediaType.APPLICATION_JSON_VALUE)

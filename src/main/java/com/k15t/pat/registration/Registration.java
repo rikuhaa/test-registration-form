@@ -8,6 +8,14 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Component;
 
+/**
+ * <p>
+ * A bean wrapping information required for making a registration.
+ * </p>
+ * <p>
+ * Contains the required and optional fields as well as value validation.
+ * </p>
+ */
 @Component
 public class Registration {
 
@@ -25,7 +33,8 @@ public class Registration {
     private String name;
 
     @NotNull
-    // FIXME password validation
+    // TODO password validation (eg. strength validation)
+    // could use eg. Pasasy library
     private String password;
 
     @NotNull
@@ -151,10 +160,19 @@ public class Registration {
 	return true;
     }
 
+    /**
+     * A Java bean wrapping address information fields and validation. Used as a
+     * part of {@link Registration}
+     */
     public static class Address {
 
 	// TODO real validation would be best done
-	// by calling some address service, but generally
+	// by calling some address service
+	// (or could at least be given as a help in client side UI)
+	// but in general case there is little universal patterns
+	// for valid addresses and it would always be quite easy to
+	// give false information in correct pattern, so user has
+	// to be trusted somewhat here
 
 	@NotNull
 	@Pattern(regexp = "\\S{1}.{0,79}\\S")

@@ -13,12 +13,30 @@ import org.springframework.stereotype.Service;
 import com.k15t.pat.registration.Registration.Address;
 import com.k15t.pat.util.PasswordUtil;
 
+/**
+ * A service wrapping access to persistent storage with information about stored
+ * registrations.
+ */
 @Singleton
 @Service
 public class RegistrationDaoService {
 
     private Map<String, ImmutableRegistration> registrations = new HashMap<>();
 
+    /**
+     * <p>
+     * Adds a new registration if a person with identical e-mail has not yet
+     * been added. Returns true if the new registration was added.
+     * </p>
+     * <p>
+     * If there already was a registration with matching e-mail present, does
+     * not do a new registration and returns false.
+     * </p>
+     * 
+     * @param toAdd
+     *            {@link Registration} to add
+     * @return true if a new registration was added, false if not
+     */
     public boolean addRegistration(Registration toAdd) {
 	if (registrations.containsKey(toAdd.getEmail())) {
 	    return false;
@@ -38,6 +56,16 @@ public class RegistrationDaoService {
 	}
     }
 
+    /**
+     * <p>
+     * Returns a {@link List} of all the {@link Registration}s added.
+     * </p>
+     * <p>
+     * Accessing this method should be access controlled to admins.
+     * </p>
+     * 
+     * @return all the {@link Registration}s present.
+     */
     public List<Registration> getRegistrations() {
 	List<Registration> res = new ArrayList<Registration>();
 
@@ -64,10 +92,22 @@ public class RegistrationDaoService {
 	return res;
     }
 
+    /**
+     * Hashes the password using the chosen hashing configuration in
+     * {@link PasswordUtil}
+     * 
+     * @param password
+     *            password to hash
+     * @return the hashed bytes (and other needed information) as a byte array
+     */
     private byte[] hashPassword(String password) {
 	return PasswordUtil.hashPw(password);
     }
 
+    /**
+     * Helper class used in the "persistent" storage for representing a
+     * {@link Registration}
+     */
     private static class ImmutableRegistration {
 
 	private final String email;
@@ -89,6 +129,10 @@ public class RegistrationDaoService {
 
     }
 
+    /**
+     * Helper class used in the "persistent" storage for representing an
+     * {@link Address}
+     */
     private final static class ImmutableAddress {
 
 	private final String streetAddress;
