@@ -3,6 +3,8 @@ Registration Form
 
 A test / learning project implementing a simple registration form with Maven/Spring Boot/Jersey on the back-end side, and Gulp/Angular/Angular Material on the front-end side.
 
+The project contains only a simple registration form but is setup (especially from the build support side) as a start for a larger project. There are though lots of aspects (especially in the front-end code layout) that should still require lots of work if a real project was started.
+
 ----------
 
 
@@ -19,6 +21,7 @@ Documents
   * From project root: 'java -jar target/registration-0.1.0.jar'
 * Open web browser to localhost:8080
 
+For 'production' uses the app or something similar should be run strictly under https to encrypt the pasword that the users provide (and also to make it possible for users to know that there could not have been eg. injected JavaScript that would send their data to unwanted parties)
 
 Developing
 -------------
@@ -47,6 +50,7 @@ TODO
 * Integrate an option to registrate with using eg. Facebook
 * More tests
   * Especially end-to-end tests with eg. Protractor
+  * UI testing (also manually, eg. IE)
 * Back-end build improvements
   * Performance (eg. some of the heavier Spring tests could probably be run concurrently)
   * Integrate a style checker
@@ -55,9 +59,13 @@ TODO
    * Integrate a doc-generation tool (eg. ngdocs)
    * Minify the js and css (could be done at least when an env variable 'prod' is set when running gulp)
    * Source maps
+   * Angular templates integration (and some router, and general code layout)
 * Validation improvement
    * Could integrate passay etc. tool for checking password strength
    * (at least) in front-end, could use some api (google?) to provide help for typing the correct address
+   * e-mail could be good to be validated by requiring some activation link
+* Accessibility improvements
+  * Eg. better ARIA texts  
   
 ### To discuss
 * Validation of registrations
